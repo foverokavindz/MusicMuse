@@ -1,0 +1,22 @@
+{
+  "name": "musicmuse",
+  "version": "1.0.0",
+  "description": "Spotify music calling backend",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "author": "Kavinda Maduranga",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.6.2",
+    "bcrypt": "^5.1.1",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-async-handler": "^1.2.0",
+    "mongoose": "^7.6.3",
+    "nodemon": "^3.0.1",
+    "qs": "^6.11.2",
+    "spotify-web-api-js": "^1.5.2"
+  }
+}
