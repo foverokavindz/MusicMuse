@@ -207,6 +207,19 @@ const getMostLikedPlaylist = asyncHandler(async (req, res) => {
   });
 });
 
+// get emotional based recommondation from user playlists
+const getEmotionlRecommondation = asyncHandler(async (req, res) => {
+  const userId = req.params.id;
+
+  // Find the user by ID
+  const user = await User.findById(userId);
+
+  if (!user) {
+    res.status(404).json({ success: false, message: 'User not found' });
+    return;
+  }
+});
+
 // export all Controllers
 module.exports = {
   getHomePageSongs,
