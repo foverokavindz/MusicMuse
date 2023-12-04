@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 const asyncHandler = require('express-async-handler');
-const { Playlist } = require('../models/playlist');
+const Playlist = require('../models/playlist');
+const { User } = require('../models/user');
+const axios = require('axios');
+const qs = require('qs');
+require('dotenv').config();
 
 // Create a new playlist
 const createPlaylist = asyncHandler(async (req, res) => {
@@ -22,14 +26,17 @@ const createPlaylist = asyncHandler(async (req, res) => {
 // Get all playlists
 const getPlaylists = asyncHandler(async (req, res) => {
   try {
-    const playlists = await Playlist.find();
+    const playlists = await Playlist.find().populate({
+      path: 'creator',
+      select: 'firstName lastName',
+      model: 'User',
+    });
 
     // Iterate through each playlist
     const playlistsWithSongsInfo = await Promise.all(
       playlists.map(async (playlist) => {
         const songsInfo = await Promise.all(
           playlist.songs.map(async (song) => {
-            // Extract detailed information about each song, replace this with your logic
             const trackData = await getTrackFromId(song.spotifySongId);
 
             return trackData;
@@ -60,18 +67,29 @@ const getPlaylistbyId = asyncHandler(async (req, res) => {
   if (!playlist) {
     return res.status(404).json({ message: 'Playlist not found' });
   }
+  console.log('playlist   ', playlist);
+  //const user = await User.findById(playlist.creator);
 
   const playlistDatafromSpotify = [];
   for (let i = 0; i < playlist.songs.length; i++) {
-    const trackData = await getTrackFromId(playlist.songs.spotifySongId);
+    const trackData = await getTrackFromId(playlist.songs[i].spotifySongId);
     playlistDatafromSpotify.push(trackData);
   }
 
-  playlist.songs = playlistDatafromSpotify;
+  // console.log(playlist.creator);
 
-  res.json(playlist);
+  //console.log(user);
+
+  const playload = {
+    playlistId: playlist._id,
+    name: playlist.name,
+    description: playlist.description,
+    creator: playlist.creator,
+    songs: playlistDatafromSpotify,
+  };
+
+  res.json(playload);
 });
-
 
 // Update a playlist by ID - #TODO not tested
 const updatePlaylistById = asyncHandler(async (req, res) => {

@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { User } = require('./user');
 
 const playlistSchema = new mongoose.Schema({
   name: {
@@ -12,7 +13,7 @@ const playlistSchema = new mongoose.Schema({
   },
   creator: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User', // Reference to the User model
+    ref: User, // Reference to the User model
     required: true,
   },
   songs: [

@@ -6,10 +6,15 @@ const {
   userUpdateProfile,
   userProfileGet,
   userRegister,
+  deleteUser,
 } = require('../controllers/usersController.js');
 
 router.route('/register').post(userRegister);
 router.post('/login', login);
-router.route('/profile/:id').get(userProfileGet).put(userUpdateProfile);
+router
+  .route('/profile/:id')
+  .get(userProfileGet)
+  .put(userUpdateProfile)
+  .delete(deleteUser);
 
 module.exports = router;

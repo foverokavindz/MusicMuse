@@ -36,7 +36,7 @@ const userSchema = new mongoose.Schema({
     maxlength: 1024,
   },
   preferredGenres: {
-    type: [String], // Assuming an array of strings for genres
+    type: [String], // array of strings for genres
     default: [],
   },
 
