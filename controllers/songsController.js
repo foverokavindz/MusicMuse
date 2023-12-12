@@ -18,7 +18,7 @@ const getHomePageSongs = asyncHandler(async (req, res) => {
   const userPreferredGenres = [...user.preferredGenres];
   const songArray = []; // Array to store song data
 
-  for (let i = 0; i < 15; i++) {
+  for (let i = 0; i < 20; i++) {
     // Select a random index from the array
     const randomIndex = Math.floor(Math.random() * userPreferredGenres.length);
     const randomGenre = userPreferredGenres[randomIndex];

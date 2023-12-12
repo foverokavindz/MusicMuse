@@ -1,7 +1,11 @@
 const express = require('express');
 const app = express();
+const cors = require('cors');
+// Enable CORS for all routes
+app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
 const db = require('./connection');
 
 const axios = require('axios');
